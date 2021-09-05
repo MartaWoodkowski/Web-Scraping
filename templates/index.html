@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Mars</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="static/stylesheet.css">
 </head>
 <body>
-  <div class="container-fluid">
+  <div class="container">
     <div class="jumbotron text-center">
-      <h1>Mission to Mars</h1>
+      <h1>MISSION TO MARS</h1>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
     </div>
   </div>
@@ -18,10 +19,10 @@
   <!-- MARS LISTINGS -->
 
   <!-- Latest Mars News  -->
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h2>Latest Mars News</h2>
+        <h1>Latest Mars News</h1>
         <h4 class="heading">{{ mars_data.News_Title }}</h4>
         <p>{{ mars_data.News_Paragraph }}</p>
       </div>
@@ -30,7 +31,7 @@
   <br>
 
   <!-- Featured Image  -->
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-8">
         <h2>Featured Mars Image</h2>
@@ -47,18 +48,23 @@
   <br>
 
     <!-- Mars Hemispheres -->
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-12 text-center">
-      <h2>Mars Hemispheres</h2>
+      <h1>Mars Hemispheres</h1>
     <hr>
     
-    <div class="container">
+    <!-- <div class="container"> -->
       <div class="row">
         {% for x in mars_data.Hemispheres %}
         <div class="col-sm-3">
-          <img class="img-fluid img-thumbnail" src="{{x.img_url}}" alt="Hemisphere Images">
-          <h4>{{x.title}}</h4>
+          <div class="card h-100">
+            <img class="img-responsive" class="card-img-top" src="{{x.img_url}}" alt="Hemisphere Images">
+            <br>
+            <div class="car-body">
+              <h3 class="card-title">{{x.title}}</h3>
+            </div>
+          </div>
         </div>
         {% endfor %}
       </div>
@@ -66,5 +72,6 @@
     </div>
     </div>
   </div>
+  <br>
 </body>
 </html>
