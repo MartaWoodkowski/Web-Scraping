@@ -50,7 +50,7 @@ def scrape():
     table.columns=['Description','Mars','Earth']
 
     # Convert the data to an HTML table string
-    html_format_table = table.to_html(index=False, classes=['table','table-striped'])
+    html_format_table = table.to_html(index=False, border=True, classes=['table','table-striped'])
 
     # Clean it up by getting rid of '\n'
     html_format_table = html_format_table.replace('\n', '')
@@ -85,7 +85,7 @@ def scrape():
         response = requests.get(url_p)
         soup = bs(response.text,'html.parser')
         results = soup.find_all('div', class_='downloads')
-        image_url_list.append(url + results[0].find_all('a')[1]['href'])
+        image_url_list.append(url + results[0].find_all('a')[0]['href'])
 
     hemisphere_image_urls = []
 
@@ -102,11 +102,9 @@ def scrape():
         "News_Paragraph": news_p,
         "Featured_Image": featured_image_url,
         "Mars_Info": html_format_table,
-        "Hemisphere":hemisphere_image_urls
+        "Hemispheres":hemisphere_image_urls
     }
 
     browser.quit()
     
     return listings
-
-
