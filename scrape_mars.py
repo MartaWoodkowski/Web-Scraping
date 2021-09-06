@@ -50,50 +50,46 @@ def scrape():
     table.columns=['Description','Mars','Earth']
 
     # Convert the data to an HTML table string
-    html_format_table = table.to_html(index=False, border=True, classes=['table','table-striped'])
-
+    html_format_table = table.to_html(index=False, border=True, classes=['table','table-striped','table-responsive'])
+    
     # Clean it up by getting rid of '\n'
     html_format_table = html_format_table.replace('\n', '')
+
+    # Replace the align (from default 'right') to 'left'
+    html_format_table = html_format_table.replace('right', 'left')
 
 
 
     # MARS HEMISPHERES
     # URL of page to be scraped
     url = 'https://marshemispheres.com/'
+        
+    # Go to main page
+    browser.visit(url)
 
-    # Retrieve page with the requests module
-    response = requests.get(url)
-
-    # Create BeautifulSoup object
-    soup = bs(response.text,'html.parser')
-
-    # Examine the results, then determine element that contains sought info (titles, img urls)
-    results = soup.find_all('div', class_='item')
-
-    href_list = []
-    title_list = []
-
-    # Loop through returned results and append to the lists above
-    for result in results:
-        title_list.append(result.h3.text)
-        href_list.append(url + result.a['href'])
-
-    image_url_list = []
-
-    # Loop through each img to get high resolution pics urls and append to the 'image_url_list'
-    for url_p in href_list:
-        response = requests.get(url_p)
-        soup = bs(response.text,'html.parser')
-        results = soup.find_all('div', class_='downloads')
-        image_url_list.append(url + results[0].find_all('a')[0]['href'])
+    # Find how many links to pictures are on the page
+    links = browser.find_by_css('h3')
+    links_number = len(links)-1
 
     hemisphere_image_urls = []
 
-    # Create the list of dictionaries with the image url string and the hemisphere title, and 
-    # append to 'hemisphere_image_urls' list
-    for index in range(len(title_list)):
-        hemisphere_image_urls.append({'title':title_list[index], 'img_url':image_url_list[index]})
-
+    for x in range(links_number):
+        
+        # Get the title
+        links = browser.find_by_css('h3')
+        title = links[x].text
+        
+        # Click the link
+        links[x].click()
+        
+        # Extract picture url
+        url_link = browser.find_by_text('Sample')['href']
+        
+        # Create dictionary
+        hemisphere_image_urls.append({"title":title,"img_url":url_link})
+        
+        #Go back orginal page
+        browser.find_by_text('Back').click()
     
 
     # Store data in a dictionary
