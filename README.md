@@ -83,7 +83,7 @@ Use MongoDB with Flask templating to create a new HTML page that displays all of
 
 - - -
 
-## Something to consieder:
+## Something to consider:
 
 * Use Splinter to navigate the sites when needed and BeautifulSoup to help find and parse out the necessary data.
 
